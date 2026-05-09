@@ -37,7 +37,6 @@ export default function App() {
   const toggleNEO = () => {
     setShowNEO(!showNEO);
   };
-
   // Applique les paramètres NEO au chargement
   useEffect(() => {
     const savedSettings = localStorage.getItem('neo-settings');
