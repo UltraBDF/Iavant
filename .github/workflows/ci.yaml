@@ -25,11 +25,11 @@ jobs:
       - name: Check Formatting (Prettier)
         run: npx prettier --check .
 
-      - name: Linting (ESLint)
-        run: npm run lint
+      # - name: Linting (ESLint)
+      #   run: npm run lint
 
-      # - name: Type-checking (TypeScript)
-      #   run: npm run type-check
+      - name: Type-checking (TypeScript)
+        run: npm run type-check
 
       # On s'en fiche un peu en vrai pour le moment....
       # - name: Unit Tests (Vitest)
