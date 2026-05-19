@@ -25,14 +25,16 @@ export default function Era2() {
   }, [navigate]);
 
   return (
-    <div style={{
-      backgroundColor: '#0000AA',
-      color: '#AAAAAA',
-      minHeight: '100vh',
-      fontFamily: 'monospace',
-      padding: '0',
-      margin: '0'
-    }}>
+    <div
+      style={{
+        backgroundColor: '#0000AA',
+        color: '#AAAAAA',
+        minHeight: '100vh',
+        fontFamily: 'monospace',
+        padding: '0',
+        margin: '0',
+      }}
+    >
       <MuseumNav currentEra={2} style="dos" />
 
       {/* Tout en texte brut, comme sur un vrai BBS/terminal années 80 */}

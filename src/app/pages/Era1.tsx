@@ -198,14 +198,15 @@ export default function Era1() {
   const renderHighlightedText = () => {
     // Split text by lines first to handle line-based highlighting
     const lines = displayedText.split('\n');
-    
+
     return lines.map((line, lineIdx) => {
       // If line contains specific keywords, highlight the whole line or parts of it
-      if (line.includes('Commandes disponibles:') || 
-          line.includes('NEXT    -') || 
-          line.includes('BACK    -') || 
-          line.includes('HELP    -')) {
-        
+      if (
+        line.includes('Commandes disponibles:') ||
+        line.includes('NEXT    -') ||
+        line.includes('BACK    -') ||
+        line.includes('HELP    -')
+      ) {
         const parts = line.split(/(NEXT|BACK|HELP)/g);
         return (
           <div key={lineIdx} className="bg-green-500/10">

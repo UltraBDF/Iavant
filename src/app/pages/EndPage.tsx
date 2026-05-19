@@ -160,7 +160,7 @@ export default function EndPage() {
                       }}
                     />
                   </div>
-                  <a href={`/era/${era.id}`} className="hover:scale-105 transition-transform"> 
+                  <a href={`/era/${era.id}`} className="hover:scale-105 transition-transform">
                     <div
                       className="bg-black/80 border-2 rounded-lg p-3 sm:p-4 backdrop-blur-sm w-full sm:min-w-[160px] text-center"
                       style={{
@@ -168,19 +168,19 @@ export default function EndPage() {
                         boxShadow: `0 0 15px ${era.color}40`,
                       }}
                     >
-                        <div
-                          className="text-xl sm:text-2xl font-bold font-mono mb-1 sm:mb-2"
-                          style={{ color: era.color }}
-                        >
-                          ÈRE {era.id}
-                        </div>
-                        <div className="text-xs text-gray-400 mb-1 sm:mb-2">{era.year}</div>
-                        <div className="text-xs sm:text-sm font-semibold text-white mb-1 sm:mb-2">
-                          {era.title}
-                        </div>
-                        <div className="text-xs text-gray-300">{era.description}</div>
+                      <div
+                        className="text-xl sm:text-2xl font-bold font-mono mb-1 sm:mb-2"
+                        style={{ color: era.color }}
+                      >
+                        ÈRE {era.id}
                       </div>
-                    </a>
+                      <div className="text-xs text-gray-400 mb-1 sm:mb-2">{era.year}</div>
+                      <div className="text-xs sm:text-sm font-semibold text-white mb-1 sm:mb-2">
+                        {era.title}
+                      </div>
+                      <div className="text-xs text-gray-300">{era.description}</div>
+                    </div>
+                  </a>
                 </motion.div>
               ))}
             </div>
