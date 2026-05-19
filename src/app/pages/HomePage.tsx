@@ -165,10 +165,10 @@ export default function HomePage() {
           className="text-base md:text-xl text-green-500/80 font-mono mb-12 leading-relaxed max-w-3xl mx-auto"
         >
           Vous vous apprêtez à plonger dans un voyage temporel numérique. Pour faciliter votre
-          expérience, nous vous informons que ce musée ce décompose en 6 ères chronologiques,
+          expérience, nous vous informons que ce musée se décompose en 6 ères chronologiques,
           chacune correspondant à une période clé de l'histoire d'Internet. Chaque ère est conçue
           pour être immersive et fidèle à son époque, avec des éléments visuels et interactifs
-          spécifiques. Mais chacune des ères ne représenent qu'une seule page web, si vous souhaitez
+          spécifiques. Mais chacune des ères ne représente qu'une seule page web, si vous souhaitez
           poursuivre référez-vous aux boutons en bas de l'écran pour naviguer d'ère en ère.
         </motion.p>
 

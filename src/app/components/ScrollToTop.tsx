@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { ChevronUp } from 'lucide-react';
 
 export default function ScrollToTop() {
   const { pathname } = useLocation();
@@ -13,14 +15,14 @@ export default function ScrollToTop() {
   // Handle visibility of "Back to top" button
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
+      if (window.scrollY > 300) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
       }
     };
 
-    window.addEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
@@ -31,43 +33,29 @@ export default function ScrollToTop() {
     });
   };
 
-  if (!isVisible) return null;
-
   return (
-    <button
-      onClick={scrollToTop}
-      style={{
-        position: 'fixed',
-        bottom: '80px', // Higher to avoid overlap with mobile nav or NEO
-        right: '20px',
-        padding: '12px 16px',
-        backgroundColor: '#667eea',
-        color: 'white',
-        border: 'none',
-        borderRadius: '50%',
-        width: '50px',
-        height: '50px',
-        cursor: 'pointer',
-        fontSize: '24px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-        zIndex: '1000',
-        transition: 'all 0.3s ease',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = '#764ba2';
-        e.currentTarget.style.transform = 'scale(1.1)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = '#667eea';
-        e.currentTarget.style.transform = 'scale(1)';
-      }}
-      title="Retour en haut"
-      aria-label="Retour au top de la page"
-    >
-      ↑
-    </button>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.5, y: 20 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={scrollToTop}
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 9999,
+          }}
+          className="flex h-12 w-12 items-center justify-center rounded bg-black border-2 border-green-500 text-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)] transition-colors hover:bg-green-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-green-500"
+          title="Retour en haut"
+          aria-label="Retour au top de la page"
+        >
+          <ChevronUp className="h-6 w-6" strokeWidth={3} />
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 }

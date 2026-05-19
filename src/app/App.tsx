@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
 
 import Loader from './components/Loader';
 import NetworkAnimation from './components/NetworkAnimation';
+import StartPopup from './components/StartPopup';
 import NEO from './components/NEO';
 import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
@@ -15,7 +17,77 @@ import Era6 from './pages/Era6';
 import EndPage from './pages/EndPage';
 import Tooltip from './components/Tooltip';
 
+interface Settings {
+  fontSize: number;
+  highContrast: boolean;
+  dyslexicFont: boolean;
+  soundEnabled: boolean;
+  keyboardNav: boolean;
+}
+
+const DEFAULT_SETTINGS: Settings = {
+  fontSize: 16,
+  highContrast: false,
+  dyslexicFont: false,
+  soundEnabled: true,
+  keyboardNav: true,
+};
+
+function KeyboardNavigation({ disabled }: { disabled: boolean }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (disabled) return;
+
+      const savedSettings = localStorage.getItem('neo-settings');
+      const settings = savedSettings ? JSON.parse(savedSettings) : { keyboardNav: true };
+
+      if (!settings.keyboardNav) return;
+
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA'
+      ) {
+        return;
+      }
+
+      const path = window.location.pathname;
+      const eraMatch = path.match(/\/era\/(\d+)/);
+
+      if (eraMatch) {
+        const currentEra = parseInt(eraMatch[1]);
+        if (e.key === 'ArrowRight') {
+          if (currentEra < 6) {
+            navigate(`/era/${currentEra + 1}`);
+          } else {
+            navigate('/end');
+          }
+        } else if (e.key === 'ArrowLeft') {
+          if (currentEra > 1) {
+            navigate(`/era/${currentEra - 1}`);
+          } else {
+            navigate('/');
+          }
+        }
+      } else if (path === '/' && e.key === 'ArrowRight') {
+        navigate('/era/1');
+      } else if (path === '/end' && e.key === 'ArrowLeft') {
+        navigate('/era/6');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigate, disabled]);
+
+  return null;
+}
+
 export default function App() {
+  const [startComplete, setStartComplete] = useState(() => {
+    return localStorage.getItem('hasSeenIntro') === 'true';
+  });
   const [loadingComplete, setLoadingComplete] = useState(() => {
     return localStorage.getItem('hasSeenIntro') === 'true';
   });
@@ -24,6 +96,22 @@ export default function App() {
   });
   const [showNEO, setShowNEO] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
+
+  const [settings, setSettings] = useState<Settings>(() => {
+    const saved = localStorage.getItem('neo-settings');
+    return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : DEFAULT_SETTINGS;
+  });
+
+  const refreshSettings = useCallback(() => {
+    const saved = localStorage.getItem('neo-settings');
+    if (saved) {
+      setSettings(JSON.parse(saved));
+    }
+  }, []);
+
+  const handleStartComplete = () => {
+    setStartComplete(true);
+  };
 
   const handleLoadingComplete = () => {
     setLoadingComplete(true);
@@ -37,35 +125,90 @@ export default function App() {
   const toggleNEO = () => {
     setShowNEO(!showNEO);
   };
-  // Applique les paramètres NEO au chargement
+
+  // Applique les paramètres NEO au chargement et au changement de settings
   useEffect(() => {
-    const savedSettings = localStorage.getItem('neo-settings');
-    if (savedSettings) {
-      const settings = JSON.parse(savedSettings);
+    // Font size
+    document.documentElement.style.fontSize = `${settings.fontSize}px`;
 
-      // Font size
-      if (settings.fontSize) {
-        document.documentElement.style.fontSize = `${settings.fontSize}px`;
-      }
-
-      // High contrast
-      if (settings.highContrast) {
-        document.body.classList.add('high-contrast');
-      }
-
-      // Dyslexic font
-      if (settings.dyslexicFont) {
-        document.body.style.fontFamily = 'OpenDyslexic, Arial, sans-serif';
-        document.body.classList.add('dyslexic-font');
-      }
+    // High contrast
+    if (settings.highContrast) {
+      document.body.classList.add('high-contrast');
+    } else {
+      document.body.classList.remove('high-contrast');
     }
-  }, []);
+
+    // Dyslexic font
+    if (settings.dyslexicFont) {
+      document.body.style.fontFamily = 'OpenDyslexic, Arial, sans-serif';
+      document.body.classList.add('dyslexic-font');
+    } else {
+      document.body.style.fontFamily = '';
+      document.body.classList.remove('dyslexic-font');
+    }
+  }, [settings]);
 
   const showMainContent = loadingComplete && networkComplete;
 
+  useEffect(() => {
+    if (!settings.soundEnabled || !showMainContent) return;
+
+    let audioCtx: AudioContext | null = null;
+    let oscillator: OscillatorNode | null = null;
+    let gainNode: GainNode | null = null;
+
+    const startAmbientSound = () => {
+      try {
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        audioCtx = new AudioContextClass();
+
+        oscillator = audioCtx.createOscillator();
+        gainNode = audioCtx.createGain();
+
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(40, audioCtx.currentTime); // Low hum
+
+        gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime); // Very subtle
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.start();
+      } catch (e) {
+        console.error('Failed to start ambient sound:', e);
+      }
+    };
+
+    const handleInteraction = () => {
+      if (!audioCtx) startAmbientSound();
+      window.removeEventListener('click', handleInteraction);
+    };
+
+    window.addEventListener('click', handleInteraction);
+
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+      if (oscillator) {
+        try {
+          oscillator.stop();
+        } catch (e) {
+          /* ignore */
+        }
+      }
+      if (audioCtx) {
+        try {
+          audioCtx.close();
+        } catch (e) {
+          /* ignore */
+        }
+      }
+    };
+  }, [showMainContent, settings.soundEnabled]);
+
   return (
     <>
-      {!loadingComplete && <Loader onComplete={handleLoadingComplete} />}
+      {!startComplete && <StartPopup onStart={handleStartComplete} />}
+      {startComplete && !loadingComplete && <Loader onComplete={handleLoadingComplete} />}
       {loadingComplete && !networkComplete && (
         <NetworkAnimation onComplete={handleNetworkComplete} />
       )}
@@ -73,6 +216,7 @@ export default function App() {
       {showMainContent && (
         <div className="relative min-h-screen">
           <Router>
+            <KeyboardNavigation disabled={showNEO} />
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -85,26 +229,35 @@ export default function App() {
               <Route path="/end" element={<EndPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+
+            <div>
+              <Tooltip
+                visible={showTooltip}
+                message="Coucou ! Je suis NEO, votre assistant de navigation."
+                duration={30000} // 30 secondes
+                onHide={() => setShowTooltip(false)}
+                className="fixed bottom-20 left-5 bg-green-500 text-black px-4 py-2 rounded shadow-lg"
+              />
+            </div>
+            <button
+              onClick={toggleNEO}
+              className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-400 rounded-full flex items-center justify-center shadow-lg shadow-green-500/50 transition-all hover:scale-110"
+              aria-label="Navigation Égalitaire et Optimisée"
+            >
+              <span className="text-black text-xl font-bold">N</span>
+            </button>
+
+            <AnimatePresence>
+              {showNEO && (
+                <NEO
+                  onClose={() => {
+                    setShowNEO(false);
+                    refreshSettings();
+                  }}
+                />
+              )}
+            </AnimatePresence>
           </Router>
-
-          <div>
-            <Tooltip
-              visible={showTooltip}
-              message="Coucou ! Je suis NEO, votre assistant de navigation."
-              duration={30000} // 30 secondes
-              onHide={() => setShowTooltip(false)}
-              className="fixed bottom-20 left-5 bg-green-500 text-black px-4 py-2 rounded shadow-lg"
-            />
-          </div>
-          <button
-            onClick={toggleNEO}
-            className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-400 rounded-full flex items-center justify-center shadow-lg shadow-green-500/50 transition-all hover:scale-110"
-            aria-label="Navigation Égalitaire et Optimisée"
-          >
-            <span className="text-black text-xl font-bold">N</span>
-          </button>
-
-          {showNEO && <NEO onClose={() => setShowNEO(false)} />}
         </div>
       )}
     </>

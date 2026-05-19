@@ -21,11 +21,15 @@ export default function NEO({ onClose }: NEOProps) {
   });
   const [soundEnabled, setSoundEnabled] = useState(() => {
     const saved = localStorage.getItem('neo-settings');
-    return saved ? (JSON.parse(saved).soundEnabled ?? true) : true;
+    if (!saved) return true;
+    const settings = JSON.parse(saved);
+    return settings.soundEnabled ?? true;
   });
   const [keyboardNav, setKeyboardNav] = useState(() => {
     const saved = localStorage.getItem('neo-settings');
-    return saved ? JSON.parse(saved).keyboardNav || false : false;
+    if (!saved) return true;
+    const settings = JSON.parse(saved);
+    return settings.keyboardNav ?? true;
   });
 
   const applySettings = () => {
@@ -269,7 +273,7 @@ export default function NEO({ onClose }: NEOProps) {
               setHighContrast(false);
               setDyslexicFont(false);
               setSoundEnabled(true);
-              setKeyboardNav(false);
+              setKeyboardNav(true);
               localStorage.removeItem('neo-settings');
             }}
             className="w-full px-4 py-2 text-sm text-green-500/70 hover:text-green-500 border border-green-500/30 hover:border-green-500 rounded transition-colors"

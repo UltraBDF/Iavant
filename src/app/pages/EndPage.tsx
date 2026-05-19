@@ -287,16 +287,13 @@ export default function EndPage() {
                 </div>
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <div className="text-6xl mb-4 text-green-500">▶</div>
-                    <p className="text-green-400 font-mono">[Vidéo de M. Placin à insérer ici]</p>
-                    <p className="text-gray-400 text-sm mt-4">
-                      Remplacez ce placeholder par l'URL de votre vidéo
-                    </p>
-                    <p className="text-gray-500 text-xs mt-2 font-mono">
-                      Utilisez un composant video ou un embed YouTube/Vimeo
-                    </p>
-                  </div>
+                  <video controls className="w-full h-full">
+                    <source
+                      src="/assets/videos/Charlie%20bit%20my%20finger%20-%20again%20!.mp4"
+                      type="video/mp4"
+                    />
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                  </video>
                 </div>
               )}
             </div>
@@ -304,7 +301,7 @@ export default function EndPage() {
             <div className="bg-gray-950 border-t-2 border-green-500/30 px-6 py-4">
               <div className="flex items-center justify-between">
                 <div className="text-green-500 font-mono text-sm">Témoignage • M. Placin</div>
-                <div className="text-gray-400 font-mono text-xs">Durée: 5:42</div>
+                <div className="text-gray-400 font-mono text-xs">Durée: 0:56</div>
               </div>
             </div>
           </motion.div>
@@ -369,6 +366,80 @@ export default function EndPage() {
             <p>L'Internet d'Avant • Musée Virtuel Immersif</p>
             <p className="mt-2">© 2026 • Projet éducatif et culturel</p>
           </div>
+        </div>
+      </motion.div>
+
+      {/* Questionnaire Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 50 }}
+        transition={{ duration: 1, delay: 6 }}
+        className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 bg-green-500/5 border-t border-green-500/20"
+      >
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold text-green-500 font-mono mb-4">
+              Votre Avis Nous Intéresse
+            </h2>
+            <p className="text-gray-400 font-mono">
+              Aidez-nous à améliorer cette expérience en répondant à quelques questions.
+            </p>
+          </div>
+
+          <form className="space-y-6 bg-gray-900/50 p-6 sm:p-8 rounded-xl border border-green-500/30 backdrop-blur-sm">
+            <div className="space-y-2">
+              <label className="block text-green-400 font-mono text-sm">
+                Quelle ère avez-vous préférée ?
+              </label>
+              <select className="w-full bg-black border border-green-500/50 rounded-lg px-4 py-3 text-white font-mono focus:border-green-500 outline-none">
+                <option>Sélectionnez une option...</option>
+                <option>Ère 1 : L'Ère Fondatrice</option>
+                <option>Ère 2 : L'Ère des Protocoles</option>
+                <option>Ère 3 : L'Ère du Web</option>
+                <option>Ère 4 : L'Ère du Grand Public</option>
+                <option>Ère 5 : L'Ère du Web 2.0</option>
+                <option>Ère 6 : L'Ère Moderne</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-green-400 font-mono text-sm">
+                L'expérience était-elle immersive ?
+              </label>
+              <div className="flex gap-4">
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <label key={num} className="flex-1 text-center cursor-pointer">
+                    <input type="radio" name="immersion" className="sr-only peer" />
+                    <div className="py-2 border border-green-500/30 rounded peer-checked:bg-green-500 peer-checked:text-black transition-all">
+                      {num}
+                    </div>
+                  </label>
+                ))}
+              </div>
+              <div className="flex justify-between text-[10px] text-gray-500 font-mono">
+                <span>Pas du tout</span>
+                <span>Totalement</span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-green-400 font-mono text-sm">
+                Vos suggestions ou commentaires :
+              </label>
+              <textarea
+                className="w-full bg-black border border-green-500/50 rounded-lg px-4 py-3 text-white font-mono focus:border-green-500 outline-none h-32"
+                placeholder="Dites-nous ce que vous en pensez..."
+              ></textarea>
+            </div>
+
+            <button
+              type="button"
+              className="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-mono font-bold rounded-lg transition-all hover:scale-[1.02]"
+              onClick={() => alert('Merci pour votre retour !')}
+            >
+              Envoyer mon avis
+            </button>
+          </form>
         </div>
       </motion.div>
 

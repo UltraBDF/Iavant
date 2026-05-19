@@ -162,8 +162,9 @@ export default function Era1() {
   }, [currentLine]);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [displayedText]);
+    // Only scroll to bottom if the user is typing a command or specifically requested (like HELP)
+    // Avoid scrolling during the initial sequence to let the user read from the top as requested
+  }, [displayedText, currentLine]);
 
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,17 +186,67 @@ export default function Era1() {
           "HELP : Afficher ce message d'aide\n\n" +
           'Note : Vous pouvez aussi utiliser la barre de navigation en bas.\n',
       );
+      // Ensure we scroll to bottom when help is displayed
+      setTimeout(scrollToBottom, 50);
     } else {
       setDisplayedText((prev) => prev + `\n> ${inputValue}\nERREUR: COMMANDE INCONNUE "${cmd}"\n`);
+      setTimeout(scrollToBottom, 50);
     }
     setInputValue('');
   };
 
+  const renderHighlightedText = () => {
+    // Split text by lines first to handle line-based highlighting
+    const lines = displayedText.split('\n');
+    
+    return lines.map((line, lineIdx) => {
+      // If line contains specific keywords, highlight the whole line or parts of it
+      if (line.includes('Commandes disponibles:') || 
+          line.includes('NEXT    -') || 
+          line.includes('BACK    -') || 
+          line.includes('HELP    -')) {
+        
+        const parts = line.split(/(NEXT|BACK|HELP)/g);
+        return (
+          <div key={lineIdx} className="bg-green-500/10">
+            {parts.map((part, i) => {
+              if (['NEXT', 'BACK', 'HELP'].includes(part)) {
+                return (
+                  <span key={i} className="bg-green-500 text-black px-1 font-bold animate-pulse">
+                    {part}
+                  </span>
+                );
+              }
+              return part;
+            })}
+          </div>
+        );
+      }
+
+      // Normal line with word-based highlighting
+      const parts = line.split(/(NEXT|BACK|HELP)/g);
+      return (
+        <div key={lineIdx}>
+          {parts.map((part, i) => {
+            if (['NEXT', 'BACK', 'HELP'].includes(part)) {
+              return (
+                <span key={i} className="bg-green-500 text-black px-1 font-bold">
+                  {part}
+                </span>
+              );
+            }
+            return part;
+          })}
+        </div>
+      );
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-black text-green-500 p-4 font-mono overflow-auto pb-24">
+    <div className="min-h-screen bg-black text-green-500 p-4 font-mono pb-24 text-base sm:text-lg">
       <MuseumNav currentEra={1} style="terminal" />
       <div className="max-w-4xl mx-auto">
-        <pre className="text-sm leading-relaxed whitespace-pre-wrap">{displayedText}</pre>
+        <div className="whitespace-pre-wrap break-words">{renderHighlightedText()}</div>
 
         {currentLine >= terminalLines.length && (
           <form onSubmit={handleCommand} className="mt-4 flex items-center">
@@ -205,7 +256,6 @@ export default function Era1() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className="bg-transparent border-none outline-none text-green-500 font-mono w-full"
-              autoFocus
               aria-label="Terminal input"
             />
             <span className="animate-pulse bg-green-500 text-black px-1 ml-1">█</span>

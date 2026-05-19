@@ -4,16 +4,16 @@ import MuseumNav from '@/app/components/MuseumNav';
 // Ère 3 : HTML PUR sans CSS (1990s) - comme les vrais premiers sites web
 export default function Era3() {
   return (
-    <html>
-      <body
-        style={{
-          backgroundColor: '#C0C0C0',
-          color: '#000000',
-          fontFamily: 'Times New Roman, Times, serif',
-          margin: '0',
-          padding: '20px',
-        }}
-      >
+    <div
+      style={{
+        backgroundColor: '#C0C0C0',
+        color: '#000000',
+        fontFamily: 'Times New Roman, Times, serif',
+        margin: '0',
+        padding: '20px',
+        minHeight: '100vh',
+      }}
+    >
         {/* Barre de navigation style navigateur années 90 */}
         <div
           style={{
@@ -362,7 +362,6 @@ export default function Era3() {
         </center>
 
         <hr />
-      </body>
-    </html>
+    </div>
   );
 }
