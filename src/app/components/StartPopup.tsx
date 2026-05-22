@@ -30,41 +30,16 @@ export default function StartPopup({ onStart }: StartPopupProps) {
 
   const handleStart = () => {
     const savedSettings = localStorage.getItem('neo-settings');
-    const settings = savedSettings ? JSON.parse(savedSettings) : { soundEnabled: true };
+    const soundEnabled = savedSettings ? JSON.parse(savedSettings).soundEnabled ?? true : true;
 
-    if (settings.soundEnabled) {
-      // Play modem sound (we'll use a data URL for the sound simulation)
-      // In production, you would use an actual 56k modem sound file
-      const AudioContextClass =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      const audioContext = new AudioContextClass();
-
-      // Simulate modem handshake sounds with oscillators
-      const playModemSound = () => {
-        const frequencies = [2100, 1650, 1800, 1200, 2400, 1800]; // Typical modem frequencies
-
-        frequencies.forEach((freq, index) => {
-          setTimeout(() => {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            oscillator.frequency.value = freq;
-            oscillator.type = 'sine';
-
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.3);
-          }, index * 300);
-        });
-      };
-
-      playModemSound();
+    if (soundEnabled) {
+      const audio = new Audio('/assets/sound/Modem 56k.mp3');
+      audio.volume = 0.8;
+      audio.play().catch(() => {});
+      setTimeout(() => {
+        audio.pause();
+        audio.currentTime = 0;
+      }, 5000);
     }
 
     setTimeout(() => {

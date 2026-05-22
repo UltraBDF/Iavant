@@ -151,60 +151,6 @@ export default function App() {
 
   const showMainContent = loadingComplete && networkComplete;
 
-  useEffect(() => {
-    if (!settings.soundEnabled || !showMainContent) return;
-
-    let audioCtx: AudioContext | null = null;
-    let oscillator: OscillatorNode | null = null;
-    let gainNode: GainNode | null = null;
-
-    const startAmbientSound = () => {
-      try {
-        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-        audioCtx = new AudioContextClass();
-
-        oscillator = audioCtx.createOscillator();
-        gainNode = audioCtx.createGain();
-
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(40, audioCtx.currentTime); // Low hum
-
-        gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime); // Very subtle
-
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        oscillator.start();
-      } catch (e) {
-        console.error('Failed to start ambient sound:', e);
-      }
-    };
-
-    const handleInteraction = () => {
-      if (!audioCtx) startAmbientSound();
-      window.removeEventListener('click', handleInteraction);
-    };
-
-    window.addEventListener('click', handleInteraction);
-
-    return () => {
-      window.removeEventListener('click', handleInteraction);
-      if (oscillator) {
-        try {
-          oscillator.stop();
-        } catch (e) {
-          /* ignore */
-        }
-      }
-      if (audioCtx) {
-        try {
-          audioCtx.close();
-        } catch (e) {
-          /* ignore */
-        }
-      }
-    };
-  }, [showMainContent, settings.soundEnabled]);
 
   return (
     <>
