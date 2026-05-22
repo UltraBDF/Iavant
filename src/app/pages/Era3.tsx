@@ -189,14 +189,13 @@ export default function Era3() {
           </p>
           <p>
             <img
-              src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+              src="/assets/images/club_internet.png"
               alt="NEW"
-              width="40"
-              height="15"
-              style={{ backgroundColor: '#FF0000' }}
+              width="100"
+              height="100"
             />
             <font size="+1">
-              <b>Photos de vacances</b>
+              <b>Club Internet</b>
             </font>
           </p>
           <hr style={{ width: '50%' }} />

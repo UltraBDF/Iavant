@@ -287,13 +287,13 @@ export default function EndPage() {
                 </div>
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <video controls className="w-full h-full">
-                    <source
-                      src="/assets/videos/Charlie%20bit%20my%20finger%20-%20again%20!.mp4"
-                      type="video/mp4"
-                    />
-                    Votre navigateur ne supporte pas la lecture de vidéos.
-                  </video>
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/1DVh0I57Lgo"
+                    title="Témoignage"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 </div>
               )}
             </div>

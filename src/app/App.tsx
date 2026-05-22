@@ -15,6 +15,7 @@ import Era4 from './pages/Era4';
 import Era5 from './pages/Era5';
 import Era6 from './pages/Era6';
 import EndPage from './pages/EndPage';
+import GestionProjet from './pages/GestionProjet';
 import Tooltip from './components/Tooltip';
 
 interface Settings {
@@ -227,6 +228,7 @@ export default function App() {
               <Route path="/era/5" element={<Era5 />} />
               <Route path="/era/6" element={<Era6 />} />
               <Route path="/end" element={<EndPage />} />
+              <Route path="/gestion-projet" element={<GestionProjet />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
 
