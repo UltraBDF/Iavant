@@ -61,7 +61,7 @@ export default function StartPopup({ onStart }: StartPopupProps) {
       </div>
 
       {/* Matrix rain background */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-90">
         {randomValues.map((val, i) => (
           <motion.div
             key={i}
