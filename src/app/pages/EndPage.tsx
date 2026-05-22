@@ -360,6 +360,12 @@ export default function EndPage() {
             >
               Revenir à l'Ère 1
             </Link>
+            <Link
+              to="/gestion-projet"
+              className="px-6 sm:px-8 py-3 sm:py-4 bg-gray-800 hover:bg-gray-700 text-green-500 font-mono font-bold rounded-lg border-2 border-green-500/50 transition-all hover:scale-105 text-sm sm:text-base"
+            >
+              Gestion de projet
+            </Link>
           </div>
 
           <div className="text-xs sm:text-sm text-gray-500 font-mono">

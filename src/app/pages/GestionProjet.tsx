@@ -68,7 +68,6 @@ export default function GestionProjet() {
           Retour à l'accueil
         </Link>
         <span className="text-green-500/40 font-mono">|</span>
-        <span className="text-green-500/60 font-mono text-sm">CDC_IAVANT_V1</span>
       </motion.header>
 
       <div className="max-w-5xl mx-auto px-6 py-12 space-y-20">
