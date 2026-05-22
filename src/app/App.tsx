@@ -151,7 +151,6 @@ export default function App() {
 
   const showMainContent = loadingComplete && networkComplete;
 
-
   return (
     <>
       {!startComplete && <StartPopup onStart={handleStartComplete} />}

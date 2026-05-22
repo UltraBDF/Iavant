@@ -188,12 +188,7 @@ export default function Era3() {
             <font color="red">Dernière mise à jour: 15 mars 1998</font>
           </p>
           <p>
-            <img
-              src="/assets/images/club_internet.png"
-              alt="NEW"
-              width="100"
-              height="100"
-            />
+            <img src="/assets/images/club_internet.png" alt="NEW" width="100" height="100" />
             <font size="+1">
               <b>Club Internet</b>
             </font>

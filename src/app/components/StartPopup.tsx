@@ -30,7 +30,7 @@ export default function StartPopup({ onStart }: StartPopupProps) {
 
   const handleStart = () => {
     const savedSettings = localStorage.getItem('neo-settings');
-    const soundEnabled = savedSettings ? JSON.parse(savedSettings).soundEnabled ?? true : true;
+    const soundEnabled = savedSettings ? (JSON.parse(savedSettings).soundEnabled ?? true) : true;
 
     if (soundEnabled) {
       const audio = new Audio('/assets/sound/modem-56k.mp3');

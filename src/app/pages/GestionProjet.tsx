@@ -7,7 +7,8 @@ const team = [
     name: 'Marc-Antoine Daux',
     role: 'Chargé Communication',
     icon: '📢',
-    description: 'Gestion de la communication, coordination des livrables et présentation du projet.',
+    description:
+      'Gestion de la communication, coordination des livrables et présentation du projet.',
   },
   {
     name: 'Alan Bourlard',
@@ -30,22 +31,37 @@ const team = [
 ];
 
 const objectives = [
-  'Concevoir un site reconstituant de manière fiable l\'histoire d\'Internet',
-  'S\'inspirer des musées virtuels existants pour une expérience pédagogique',
-  'Interface accessible et centrée sur l\'UX pour tous les publics',
+  "Concevoir un site reconstituant de manière fiable l'histoire d'Internet",
+  "S'inspirer des musées virtuels existants pour une expérience pédagogique",
+  "Interface accessible et centrée sur l'UX pour tous les publics",
   'Sélection d\'artefacts produisant un effet "Madeleine de Proust"',
   'Présenter une plateforme stable portant sur un internet inconstant',
 ];
 
 const phases = [
-  { period: 'Septembre – Toussaint', label: 'Phase 1', tasks: ['État de l\'art', 'Maquettage', 'Direction artistique'], color: 'border-green-400 text-green-400' },
-  { period: 'Toussaint – Hiver', label: 'Phase 2', tasks: ['Formation Web', 'Développement front', 'Intégration du contenu'], color: 'border-yellow-400 text-yellow-400' },
-  { period: 'Hiver – Mai 2026', label: 'Phase 3', tasks: ['Tests utilisateurs', 'Corrections', 'Soutenance finale'], color: 'border-cyan-400 text-cyan-400' },
+  {
+    period: 'Septembre – Toussaint',
+    label: 'Phase 1',
+    tasks: ["État de l'art", 'Maquettage', 'Direction artistique'],
+    color: 'border-green-400 text-green-400',
+  },
+  {
+    period: 'Toussaint – Hiver',
+    label: 'Phase 2',
+    tasks: ['Formation Web', 'Développement front', 'Intégration du contenu'],
+    color: 'border-yellow-400 text-yellow-400',
+  },
+  {
+    period: 'Hiver – Mai 2026',
+    label: 'Phase 3',
+    tasks: ['Tests utilisateurs', 'Corrections', 'Soutenance finale'],
+    color: 'border-cyan-400 text-cyan-400',
+  },
 ];
 
 const successCriteria = [
   'Expérience immersive et accessible à tous les publics',
-  'Navigation fluide permettant de comprendre l\'évolution du Web',
+  "Navigation fluide permettant de comprendre l'évolution du Web",
   'Rigueur historique alliée à une dimension nostalgique',
   'Intérêt suscité auprès de publics curieux, nostalgiques et néophytes',
 ];
@@ -71,7 +87,6 @@ export default function GestionProjet() {
       </motion.header>
 
       <div className="max-w-5xl mx-auto px-6 py-12 space-y-20">
-
         {/* Hero */}
         <motion.section
           className="text-center space-y-6"
@@ -87,13 +102,19 @@ export default function GestionProjet() {
             <span className="block text-green-400">d'Avant</span>
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-            Un musée virtuel retraçant l'évolution des usages, des modes et des technologies
-            qui ont façonné Internet depuis ses débuts.
+            Un musée virtuel retraçant l'évolution des usages, des modes et des technologies qui ont
+            façonné Internet depuis ses débuts.
           </p>
           <div className="flex flex-wrap justify-center gap-3 text-sm font-mono">
-            <span className="px-3 py-1 border border-green-500/40 rounded text-green-400">Bordeaux INP ENSC</span>
-            <span className="px-3 py-1 border border-green-500/40 rounded text-green-400">Septembre 2025</span>
-            <span className="px-3 py-1 border border-green-500/40 rounded text-green-400">Soutenance Mai 2026</span>
+            <span className="px-3 py-1 border border-green-500/40 rounded text-green-400">
+              Bordeaux INP ENSC
+            </span>
+            <span className="px-3 py-1 border border-green-500/40 rounded text-green-400">
+              Septembre 2025
+            </span>
+            <span className="px-3 py-1 border border-green-500/40 rounded text-green-400">
+              Soutenance Mai 2026
+            </span>
           </div>
         </motion.section>
 
@@ -112,17 +133,35 @@ export default function GestionProjet() {
             <div className="border border-green-500/20 rounded-lg p-6 bg-green-500/5 space-y-3">
               <h3 className="font-semibold text-white">Utilisateurs finaux</h3>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li className="flex gap-2"><span className="text-green-400">›</span>Les nouvelles générations : un musée innovant et pédagogique sur l'histoire d'Internet.</li>
-                <li className="flex gap-2"><span className="text-green-400">›</span>Les générations précédentes : un voyage nostalgique à travers leur vécu d'internautes.</li>
+                <li className="flex gap-2">
+                  <span className="text-green-400">›</span>Les nouvelles générations : un musée
+                  innovant et pédagogique sur l'histoire d'Internet.
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-400">›</span>Les générations précédentes : un voyage
+                  nostalgique à travers leur vécu d'internautes.
+                </li>
               </ul>
             </div>
             <div className="border border-green-500/20 rounded-lg p-6 bg-green-500/5 space-y-3">
               <h3 className="font-semibold text-white">Domaines techniques</h3>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li className="flex gap-2"><span className="text-green-400">›</span>Programmation Web — React, TypeScript, Tailwind CSS</li>
-                <li className="flex gap-2"><span className="text-green-400">›</span>Conception centrée utilisateur (CCU) — enquêtes, témoignages</li>
-                <li className="flex gap-2"><span className="text-green-400">›</span>Ergonomie informatique — accessibilité, UX design</li>
-                <li className="flex gap-2"><span className="text-green-400">›</span>Histoire des technologies — retracer l'histoire d'Internet</li>
+                <li className="flex gap-2">
+                  <span className="text-green-400">›</span>Programmation Web — React, TypeScript,
+                  Tailwind CSS
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-400">›</span>Conception centrée utilisateur (CCU) —
+                  enquêtes, témoignages
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-400">›</span>Ergonomie informatique — accessibilité,
+                  UX design
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-400">›</span>Histoire des technologies — retracer
+                  l'histoire d'Internet
+                </li>
               </ul>
             </div>
           </div>
@@ -159,7 +198,9 @@ export default function GestionProjet() {
                 whileHover={{ scale: 1.02 }}
               >
                 <div className="text-3xl mb-3">{member.icon}</div>
-                <p className="text-xs font-mono text-green-500 mb-1 uppercase tracking-wider">{member.role}</p>
+                <p className="text-xs font-mono text-green-500 mb-1 uppercase tracking-wider">
+                  {member.role}
+                </p>
                 <h3 className="font-bold text-white text-lg mb-2">{member.name}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{member.description}</p>
               </motion.div>
@@ -217,7 +258,9 @@ export default function GestionProjet() {
                 transition={{ duration: 0.4, delay: i * 0.15 }}
               >
                 <div>
-                  <p className={`font-mono text-xs font-bold uppercase tracking-wider ${phase.color.split(' ')[1]}`}>
+                  <p
+                    className={`font-mono text-xs font-bold uppercase tracking-wider ${phase.color.split(' ')[1]}`}
+                  >
                     {phase.label}
                   </p>
                   <p className="text-gray-400 text-xs mt-1">{phase.period}</p>
@@ -225,7 +268,9 @@ export default function GestionProjet() {
                 <ul className="space-y-2">
                   {phase.tasks.map((task) => (
                     <li key={task} className="flex items-center gap-2 text-sm text-gray-300">
-                      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${phase.color.split(' ')[1].replace('text-', 'bg-')}`} />
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full shrink-0 ${phase.color.split(' ')[1].replace('text-', 'bg-')}`}
+                      />
                       {task}
                     </li>
                   ))}
