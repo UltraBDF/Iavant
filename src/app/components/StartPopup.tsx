@@ -33,7 +33,7 @@ export default function StartPopup({ onStart }: StartPopupProps) {
     const soundEnabled = savedSettings ? JSON.parse(savedSettings).soundEnabled ?? true : true;
 
     if (soundEnabled) {
-      const audio = new Audio('/assets/sound/Modem 56k.mp3');
+      const audio = new Audio('/assets/sound/modem-56k.mp3');
       audio.volume = 0.8;
       audio.play().catch(() => {});
       setTimeout(() => {
