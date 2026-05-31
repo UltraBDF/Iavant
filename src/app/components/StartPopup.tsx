@@ -34,17 +34,22 @@ export default function StartPopup({ onStart }: StartPopupProps) {
 
     if (soundEnabled) {
       const audio = new Audio('/assets/sound/modem-56k.mp3');
-      audio.volume = 0.8;
-      audio.play().catch(() => {});
+      audio.volume = 0.5;
+      audio.currentTime = 9;
+      audio.play().catch((err) => {
+        console.warn('Audio playback failed:', err);
+      });
+
+      // Stop the audio at 16 seconds (7 seconds of playback)
       setTimeout(() => {
         audio.pause();
         audio.currentTime = 0;
-      }, 5000);
+      }, 7000);
     }
 
     setTimeout(() => {
       onStart();
-    }, 2500);
+    }, 500);
   };
 
   return (

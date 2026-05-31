@@ -37,16 +37,19 @@ export default function Loader({ onComplete }: LoaderProps) {
 
   useEffect(() => {
     if (currentIndex < loaderText.length) {
+      // Calculate delay to spread lines over ~6 seconds, leaving 1s for the final state
+      const delay = 6000 / loaderText.length;
       const timer = setTimeout(
         () => {
           setLines((prev) => [...prev, loaderText[currentIndex]]);
           setCurrentIndex(currentIndex + 1);
         },
-        300 + Math.random() * 200,
+        delay,
       );
 
       return () => clearTimeout(timer);
     } else {
+      // Final delay to reach exactly 7 seconds total
       const finalTimer = setTimeout(() => {
         onComplete();
       }, 1000);
@@ -143,7 +146,7 @@ export default function Loader({ onComplete }: LoaderProps) {
             className="h-full bg-green-500"
             initial={{ width: '0%' }}
             animate={{ width: '100%' }}
-            transition={{ duration: 3, ease: 'linear' }}
+            transition={{ duration: 7, ease: 'linear' }}
           />
         </div>
 
