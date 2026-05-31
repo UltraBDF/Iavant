@@ -39,13 +39,10 @@ export default function Loader({ onComplete }: LoaderProps) {
     if (currentIndex < loaderText.length) {
       // Calculate delay to spread lines over ~6 seconds, leaving 1s for the final state
       const delay = 6000 / loaderText.length;
-      const timer = setTimeout(
-        () => {
-          setLines((prev) => [...prev, loaderText[currentIndex]]);
-          setCurrentIndex(currentIndex + 1);
-        },
-        delay,
-      );
+      const timer = setTimeout(() => {
+        setLines((prev) => [...prev, loaderText[currentIndex]]);
+        setCurrentIndex(currentIndex + 1);
+      }, delay);
 
       return () => clearTimeout(timer);
     } else {
