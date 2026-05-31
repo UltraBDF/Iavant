@@ -86,15 +86,9 @@ function KeyboardNavigation({ disabled }: { disabled: boolean }) {
 }
 
 export default function App() {
-  const [startComplete, setStartComplete] = useState(() => {
-    return localStorage.getItem('hasSeenIntro') === 'true';
-  });
-  const [loadingComplete, setLoadingComplete] = useState(() => {
-    return localStorage.getItem('hasSeenIntro') === 'true';
-  });
-  const [networkComplete, setNetworkComplete] = useState(() => {
-    return localStorage.getItem('hasSeenIntro') === 'true';
-  });
+  const [startComplete, setStartComplete] = useState(false);
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  const [networkComplete, setNetworkComplete] = useState(false);
   const [showNEO, setShowNEO] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
 
@@ -120,7 +114,6 @@ export default function App() {
 
   const handleNetworkComplete = () => {
     setNetworkComplete(true);
-    localStorage.setItem('hasSeenIntro', 'true');
   };
 
   const toggleNEO = () => {

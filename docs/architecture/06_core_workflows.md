@@ -3,9 +3,8 @@
 ## 1. Initialisation de l'Application
 
 1. Chargement des réglages N.E.O. depuis `localStorage`.
-2. Vérification de `hasSeenIntro`.
-3. Si non vu : Lancement de `NetworkAnimation`.
-4. Si vu : Redirection vers `HomePage` (Timeline).
+2. Lancement de la séquence d'introduction (`StartPopup`, `Loader`, `NetworkAnimation`).
+3. Après complétion : Redirection vers `HomePage` (Timeline).
 
 ## 2. Transition entre Ères
 

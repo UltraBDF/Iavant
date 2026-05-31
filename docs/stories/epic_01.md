@@ -35,4 +35,3 @@
 
 - Scène de particules 3D interactive (réagit à la souris).
 - Bouton "Entrer dans le Musée" apparaissant après l'animation.
-- Persistance de l'état `hasSeenIntro` dans le `localStorage`.
